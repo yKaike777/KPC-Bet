@@ -15,9 +15,10 @@
 
         if($usuario && password_verify($password, $usuario['senha'])){ // Verifica se a senha está certa
 
-            $_SESSION['user_id'] = $usuario['id'];
-            $_SESSION['user_first_name'] = $usuario['primeiro_nome'];
-            $_SESSION['user_last_name'] = $usuario['ultimo_nome'];
+            $_SESSION['user_id']            = $usuario['id'];
+            $_SESSION['user_profile']       = $usuario['perfil'];
+            $_SESSION['user_first_name']    = $usuario['primeiro_nome'];
+            $_SESSION['user_last_name']     = $usuario['ultimo_nome'];
             // 👆 Pega os dados do Banco de Dados
 
             header("Location: index.php");
@@ -68,7 +69,7 @@
             <div class="icons">
                 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="50" alt="Facebook" class="icon">
                 <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" width="50" alt="Google" class="icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" width="50" alt="GitHub" class="icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" width="50" alt="GitHub" class="icon" id="github">
             </div>
         </form>
 
@@ -88,5 +89,6 @@
         </script>
     <?php endif; ?>
 
+    <script src="js/main.js"></script>
 </body>
 </html>
