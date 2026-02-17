@@ -1,0 +1,6 @@
+<footer>
+    FOOTER FOOTER FOOTER FOOTER FOOTER
+</footer>
+
+</body>
+</html>
