@@ -4,6 +4,7 @@
     <?php if($_SESSION['user_profile'] === 'admin'):?>
 
         <p>administrador, <?php echo $_SESSION['user_first_name'] . ' ' . $_SESSION['user_last_name'];?></p>
+        <button onclick="window.location.href='usuario-list.php'">Lista de Usuários</button>
 
     <?php elseif($_SESSION['user_profile'] === 'comum'): ?>
 
