@@ -4,7 +4,7 @@
       
       <!-- Sobre -->
       <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-        <h5 class="text-uppercase">Meu Site</h5>
+        <h5 class="text-uppercase">KPC Bet</h5>
         <p>
           Este é um exemplo de footer simples feito com Bootstrap.
           Você pode adicionar informações, links ou redes sociais aqui.
@@ -16,9 +16,9 @@
         <h5 class="text-uppercase">Links</h5>
         <ul class="list-unstyled mb-0">
           <li><a href="#" class="text-white text-decoration-none">Home</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Sobre</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Serviços</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Contato</a></li>
+          <li><a href="https://github.com/joao-cappeletti000000" class="text-white text-decoration-none">GitHub do Cappeletti</a></li>
+          <li><a href="https://github.com/167888" class="text-white text-decoration-none">GitHub do Pietro</a></li>
+          <li><a href="https://github.com/yKaike777" class="text-white text-decoration-none">GitHub do Kaike</a></li>
         </ul>
       </div>
 
@@ -34,7 +34,7 @@
 
   <!-- Copyright -->
   <div class="text-center p-3 bg-secondary">
-    © 2026 Meu Site - Todos os direitos reservados
+    © 2026 KPC - Todos os direitos reservados
   </div>
 </footer>
 
