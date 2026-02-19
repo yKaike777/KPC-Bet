@@ -60,7 +60,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="saldo">Saldo</label>
-                            <p class="form-control"><?php echo $usuario['saldo'];?></p>
+                            <p class="form-control"><?= number_format($usuario['saldo'], 2, ',', '.') ?></p>
                         </div>
                         <?php 
                             } else{

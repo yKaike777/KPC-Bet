@@ -37,7 +37,7 @@
                     <div class='input-group-prepend'>
                         <span class='input-group-text'>$</span>
                     </div>
-                    <input type='number' class='form-control' name='quantia' aria-label='Amount (to the nearest dollar)'>
+                    <input type='number' step='.01' class='form-control' name='quantia' aria-label='Amount (to the nearest dollar)'>
                     <div class='input-group-append'>
                         <span class='input-group-text'>.00</span>
                     </div>
@@ -51,7 +51,7 @@
                     <div class='input-group-prepend'>
                         <span class='input-group-text'>$</span>
                     </div>
-                    <input type='number' class='form-control' name='quantia' aria-label='Amount (to the nearest dollar)'>
+                    <input type='number' step='.01' class='form-control' name='quantia' aria-label='Amount (to the nearest dollar)'>
                     <div class='input-group-append'>
                         <span class='input-group-text'>.00</span>
                     </div>

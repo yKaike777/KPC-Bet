@@ -56,7 +56,7 @@
                                     <td><?php echo $usuario['ultimo_nome']?></td>
                                     <td><?php echo $usuario['email']?></td>
                                     <td><?php echo $usuario['telefone']?></td>
-                                    <td><?php echo $usuario['saldo']?></td>
+                                    <td><?= number_format($usuario['saldo'], 2, ',', '.') ?></td>
                                     <td>
                                         <a href="usuario-view.php?id=<?=$usuario['id']?>" class="btn btn-secondary btn-sm">Visualizar</a>
                                         <a href="usuario-edit.php?id=<?=$usuario['id']?>" class="btn btn-success btn-sm">Editar</a>
