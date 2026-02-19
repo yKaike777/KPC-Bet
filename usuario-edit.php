@@ -58,11 +58,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="phone_number">Telefone</label>
-                            <input type="text" class="form-control" name="phone_number" value="<?=$usuario['primeiro_nome']?>">
+                            <input type="text" class="form-control" name="phone_number" value="<?=$usuario['telefone']?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="saldo">Saldo</label>
+                            <input type="number" class="form-control" name="saldo" value="<?=$usuario['saldo']?>">
                         </div>
                         <div class="mb-3">
                             <label for="password">Senha</label>
-                            <input type="password" class="form-control" name="password" value="<?=$usuario['primeiro_nome']?>">
+                            <input type="password" class="form-control" name="password" value="">
                         </div>
                         <div class="mb-3">
                                 <button type="submit" name="update_usuario" class="btn btn-primary">Editar</button>

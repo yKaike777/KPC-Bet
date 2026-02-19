@@ -19,6 +19,7 @@
             $_SESSION['user_profile']       = $usuario['perfil'];
             $_SESSION['user_first_name']    = $usuario['primeiro_nome'];
             $_SESSION['user_last_name']     = $usuario['ultimo_nome'];
+            $_SESSION['user_balance']       = $usuario['saldo'];
             // 👆 Pega os dados do Banco de Dados
 
             header("Location: index.php");

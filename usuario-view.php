@@ -58,6 +58,10 @@
                             <label for="phone_number">Telefone</label>
                             <p class="form-control"><?php echo $usuario['telefone'];?></p>
                         </div>
+                        <div class="mb-3">
+                            <label for="saldo">Saldo</label>
+                            <p class="form-control"><?php echo $usuario['saldo'];?></p>
+                        </div>
                         <?php 
                             } else{
                                 echo "<h5>Usuário não encontrado!</h5>";

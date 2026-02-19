@@ -31,7 +31,7 @@
   </button>
 
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><a class="dropdown-item" href="#">Perfil</a></li>
+    <li><a class="dropdown-item" href="perfil.php">Perfil</a></li>
     <li><a class="dropdown-item" href="#">Configurações</a></li>
     <li><a class="dropdown-item text-danger" href="logout.php">Sair</a></li>
   </ul>

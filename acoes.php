@@ -29,6 +29,7 @@
         $primeiro_nome = trim($_POST['first_name']);
         $ultimo_nome = trim($_POST['last_name']);
         $email = trim($_POST['email']);
+        $saldo = $_POST['saldo'];
         $telefone = preg_replace('/[^0-9]/', '', $_POST['phone_number']);
         $senha = trim($_POST['password']);
         
@@ -37,6 +38,7 @@
             primeiro_nome = :primeiro_nome,
             ultimo_nome = :ultimo_nome,
             email = :email,
+            saldo = :saldo,
             telefone = :telefone";
 
         if (!empty($senha)){
@@ -52,6 +54,7 @@
             ':primeiro_nome' => $primeiro_nome,
             ':ultimo_nome' => $ultimo_nome,
             ':email' => $email,
+            ':saldo' => $saldo,
             ':telefone' => $telefone,
             ':id' => $usuario_id
         ];
@@ -90,4 +93,71 @@
             exit;
         }
     }
+
+    if (isset($_POST['adicionar_saldo'])){
+
+        session_start();
+        require_once('config.php');
+
+        $usuario_id = $_SESSION['user_id'];
+        $quantia = floatval($_POST['quantia']);
+
+        if ($quantia <= 0){
+            $_SESSION['message'] = "Valor inválido!";
+            header("Location: perfil.php");
+            exit;
+        }
+
+        $sql = "UPDATE usuarios SET saldo = saldo + :quantia WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->execute([
+            ':id' => $usuario_id,
+            ':quantia' => $quantia
+        ]);
+
+        if ($result){
+            $_SESSION['message'] = "Saldo adicionado com sucesso!";
+        } else{
+            $_SESSION['message'] = "Erro ao adicionar saldo.";
+        }
+
+        header("Location: perfil.php");
+        exit;
+    }
+
+    if (isset($_POST['sacar_saldo'])){
+
+        session_start();
+        require_once('config.php');
+
+        $usuario_id = $_SESSION['user_id'];
+        $quantia = floatval($_POST['quantia']);
+
+        if ($quantia <= 0){
+            $_SESSION['message'] = "Valor inválido!";
+            header("Location: perfil.php");
+            exit;
+        }
+
+        $sql = "UPDATE usuarios 
+                SET saldo = saldo - :quantia 
+                WHERE id = :id 
+                AND saldo >= :quantia";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            ':id' => $usuario_id,
+            ':quantia' => $quantia
+        ]);
+
+        if ($stmt->rowCount() > 0){
+            $_SESSION['message'] = "Saque efetuado com sucesso!";
+        } else{
+            $_SESSION['message'] = "Saldo insuficiente!";
+        }
+
+        header("Location: perfil.php");
+        exit;
+    }
+
 ?>

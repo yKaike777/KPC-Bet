@@ -33,7 +33,7 @@ $data = json_decode($response, true);
 <?php include 'navbar.php' ?>
 
 <div class="container mt-4">
-    <h2>Futebol - Série A do Brasil</h2>
+    <h2>Futebol - Brasileirão Série A</h2>
 
     <div class="d-flex flex-row gap-3">
         <div class="flex-grow-1">
@@ -90,21 +90,21 @@ $data = json_decode($response, true);
 
                                 // Casa
                                 if ($home) {
-                                    echo "<button class='btn btn-success btn-sm me-1' style='width: 60px;'>";
+                                    echo "<button class='btn btn-success btn-sm me-1' style='width: 160px;'>";
                                     echo "x" . htmlspecialchars($home['price']);
                                     echo "</button>";
                                 }
 
                                 // Empate
                                 if ($draw) {
-                                    echo "<button class='btn btn-secondary btn-sm me-1' style='width: 60px;'>";
+                                    echo "<button class='btn btn-secondary btn-sm me-1' style='width: 160px;'>";
                                     echo "x" . htmlspecialchars($draw['price']);
                                     echo "</button>";
                                 }
 
                                 // Visitante
                                 if ($away) {
-                                    echo "<button class='btn btn-danger btn-sm me-1' style='width: 60px;'>";
+                                    echo "<button class='btn btn-danger btn-sm me-1' style='width: 160px;'>";
                                     echo "x" . htmlspecialchars($away['price']);
                                     echo "</button>";
                                 }
@@ -129,7 +129,7 @@ $data = json_decode($response, true);
                                     echo "<div class='d-flex justify-content-between'><strong>Mais/Menos Gols:</strong> ";
                                     echo "<div>";
                                     foreach ($totals as $total):
-                                        echo "<button class='btn btn-info btn-sm me-1'>";
+                                        echo "<button class='btn btn-info btn-sm me-1' style='width: 120px'>";
                                         echo htmlspecialchars($total['name'] ?? '-')  . " " . htmlspecialchars($total['price'] ?? '-');
                                         echo "</button>";
                                     endforeach;
