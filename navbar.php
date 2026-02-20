@@ -10,6 +10,7 @@
     <a href="index.php" class="navbar-brand"><b>KPC BET</b></a>
     <a href="tabela.php" class="navbar-brand"><b>Tabela Brasileirão</b></a>
     <a href="index.php" class="navbar-brand">Apostas Esportivas</a>
+    <a href="roleta.php" class="navbar-brand">Roleta</a>
     <?php if ($_SESSION['user_profile'] === 'admin'):
       echo "<a href='usuario-list.php' class='navbar-brand'>Lista de Usuários</a>";
     ?>

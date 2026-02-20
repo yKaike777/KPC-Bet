@@ -2,7 +2,7 @@
 // ==========================
 // CONFIGURAÇÃO DA API
 // ==========================
-$apiKey = "d0b3dd0a8214e839996d981a6556177c";
+$apiKey = "c049650a67a3012b046efab9d5aa90d1";
 $sport = "soccer_brazil_campeonato";
 $url = "https://api.the-odds-api.com/v4/sports/$sport/odds";
 $url .= "?apiKey=$apiKey&regions=us&markets=h2h,totals&oddsFormat=decimal";
@@ -85,31 +85,46 @@ $data = json_decode($response, true);
                                     }
                                 }
 
-                                echo "<div class='mb-2 d-flex justify-content-between'><strong>Resultado:</strong>";
-                                echo "<div>";
+                            echo "<div class='mb-2 d-flex justify-content-between'><strong>Resultado:</strong>";
+                            echo "<div>";
 
-                                // Casa
-                                if ($home) {
-                                    echo "<button class='btn btn-success btn-sm me-1 odd home'  style='width: 160px;' data-valor='" . htmlspecialchars($home['price']) . "'>";
-                                    echo "x" . htmlspecialchars($home['price']);
-                                    echo "</button>";
-                                }
+                            // CASA
+                            if ($home) {
+                                echo "<button class='btn btn-success btn-sm me-1 odd'
+                                    style='width:160px;'
+                                    data-valor='".htmlspecialchars($home['price'])."'
+                                    data-team='".htmlspecialchars($partida['home_team'])."'
+                                    data-home='".htmlspecialchars($partida['home_team'])."'
+                                    data-away='".htmlspecialchars($partida['away_team'])."'>";
+                                echo "x".htmlspecialchars($home['price']);
+                                echo "</button>";
+                            }
 
-                                // Empate
-                                if ($draw) {
-                                    echo "<button class='btn btn-secondary btn-sm me-1 odd draw' style='width: 160px;' data-valor='" . htmlspecialchars($draw['price']) . "'>";
-                                    echo "x" . htmlspecialchars($draw['price']);
-                                    echo "</button>";
-                                }
+                            // EMPATE
+                            if ($draw) {
+                                echo "<button class='btn btn-secondary btn-sm me-1 odd'
+                                    style='width:160px;'
+                                    data-valor='".htmlspecialchars($draw['price'])."'
+                                    data-team='Empate'
+                                    data-home='".htmlspecialchars($partida['home_team'])."'
+                                    data-away='".htmlspecialchars($partida['away_team'])."'>";
+                                echo "x".htmlspecialchars($draw['price']);
+                                echo "</button>";
+                            }
 
-                                // Visitante
-                                if ($away) {
-                                    echo "<button class='btn btn-danger btn-sm me-1 odd away' style='width: 160px;' data-valor='" . htmlspecialchars($away['price']) . "'>";
-                                    echo "x" . htmlspecialchars($away['price']);
-                                    echo "</button>";
-                                }
+                            // VISITANTE
+                            if ($away) {
+                                echo "<button class='btn btn-danger btn-sm me-1 odd'
+                                    style='width:160px;'
+                                    data-valor='".htmlspecialchars($away['price'])."'
+                                    data-team='".htmlspecialchars($partida['away_team'])."'
+                                    data-home='".htmlspecialchars($partida['home_team'])."'
+                                    data-away='".htmlspecialchars($partida['away_team'])."'>";
+                                echo "x".htmlspecialchars($away['price']);
+                                echo "</button>";
+                            }
 
-                                echo "</div></div>";
+                            echo "</div></div>";
 
                             endif;
 
@@ -154,38 +169,64 @@ $data = json_decode($response, true);
     </div>
 </div>
 
-<div class="container position-fixed bottom-0 end-0 p-3 me-3 bg-info" style="width:25%;">
-            <div class="card">
-                <div class="card-header cabecalho"></div>
+<div class="container position-fixed bottom-0 end-0 p-3 me-3 d-none bet-container" style="width:25%; height:400px;">
+            <div class="card" style="height:100%;">
+                    <div class="card-title d-flex justify-content-center align-items-center titulo flex-column">
+
+                    </div>
+                <div class="card-header cabecalho">
+
+                </div>
+                <div class="card-body corpo d-flex flex-column" style="height:100%;"></div>
             </div>
 </div>
 
 <script>
 const odds = document.querySelectorAll('.odd');
 const cabecalho = document.querySelector('.cabecalho');
+const titulo = document.querySelector('.titulo');
+const corpo = document.querySelector('.corpo');
+const betContainer = document.querySelector('.bet-container');
 
 odds.forEach(odd => {
     odd.addEventListener('click', () => {
-        const valor = odd.dataset.valor; 
+
+        betContainer.classList.remove('d-none');
+
+        const valor = odd.dataset.valor;
+        const team = odd.dataset.team;
+        const home = odd.dataset.home;
+        const away = odd.dataset.away;
+
         const probabilidade = (1 / valor) * 100;
-        alert("Odd: " + valor + " Probabilidade: " + probabilidade.toFixed(2) + "%");
+
+        titulo.innerHTML = `
+            <span><b>${team}</b></span>
+            <span>${home} X ${away}</span>
+        `;
 
         cabecalho.innerHTML = `
             <strong>Odd:</strong> x${valor} <br>
             <strong>Probabilidade:</strong> ${probabilidade.toFixed(2)}%
-            <form action='acoes.php' method='POST'>
-                <input type='hidden' name='odd' value='${valor}'>
-                <input type='number' class='form-control' name='quantia_aposta' placeholder='Digite o valor da aposta...'>
-                <button type='submit' name='apostar' class='btn btn-success float-end mt-3'>Apostar</button>
-            </form>
-
         `;
 
-    })
-});
+        corpo.innerHTML = `
+            <form action='acoes.php' method='POST' class='d-flex flex-column h-100'>
+                <input type='hidden' name='odd' value='${valor}'>
+                <input type='hidden' name='team' value='${team}'>
 
+                <div class="flex-grow-1 d-flex align-items-center">
+                    <input type='number' class='form-control' name='quantia_aposta' 
+                    placeholder='Digite o valor da aposta...' required>
+                </div>
+
+                <button type='submit' name='apostar' 
+                class='btn btn-success w-100 mt-3'>Apostar</button>
+            </form>
+        `;
+
+    });
+});
 </script>
 
 <?php include 'footer.php' ?>
-
-

@@ -187,7 +187,12 @@
         echo "Probabilidade: " . number_format($probabilidade, 2) . "% <br>";
         echo "Quantia apostada: R$ " . number_format($quantia_aposta, 2, ',', '.') . "<br>";
         echo "Resultado: $mensagem <br>";
-        echo "Saldo: +R$ " . number_format($saldo_atual, 2, ',', '.') . "<br>" ;
+        if ($resultado == 1){
+            echo "Saldo: +R$ " . number_format($saldo_atual, 2, ',', '.') . "<br>" ;
+        } else{
+            echo "Saldo: -R$ " . number_format(abs($saldo_atual), 2, ',', '.') . "<br>" ;
+        }
+        
         echo "<a href='index.php' class='btn btn-success'>Voltar</a>";
 
         $sql = "UPDATE usuarios SET saldo = saldo + :saldo WHERE id = :id";
