@@ -161,7 +161,7 @@
     }
 
     if(isset($_POST['apostar'])){
-
+        $usuario_id = $_SESSION['user_id'];
         $quantia_aposta = $_POST['quantia_aposta'];
         $odd = $_POST['odd'];
 
@@ -176,16 +176,25 @@
 
         if ($resultado == 1){
             $mensagem = "Você ganhou";
+            $saldo_atual = ($quantia_aposta * $odd) - $quantia_aposta;
         } else{
             $mensagem = "Você perdeu";
+            $saldo_atual = $quantia_aposta * -1;
         }
 
-        $saldo_atual = $quantia_aposta * $odd;
+        
         echo "ODD: $odd <br>";
         echo "Probabilidade: " . number_format($probabilidade, 2) . "% <br>";
         echo "Quantia apostada: R$ " . number_format($quantia_aposta, 2, ',', '.') . "<br>";
         echo "Resultado: $mensagem <br>";
-        echo "Saldo: R$ " . number_format($saldo_atual, 2, ',', '.') ;
+        echo "Saldo: +R$ " . number_format($saldo_atual, 2, ',', '.') . "<br>" ;
+        echo "<a href='index.php' class='btn btn-success'>Voltar</a>";
+
+        $sql = "UPDATE usuarios SET saldo = saldo + :saldo WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            ":saldo" => $saldo_atual,
+            ":id" => $usuario_id]);
     }
 
 ?>

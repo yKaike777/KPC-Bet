@@ -187,3 +187,5 @@ odds.forEach(odd => {
 </script>
 
 <?php include 'footer.php' ?>
+
+
