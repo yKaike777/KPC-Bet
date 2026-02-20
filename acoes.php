@@ -160,4 +160,32 @@
         exit;
     }
 
+    if(isset($_POST['apostar'])){
+
+        $quantia_aposta = $_POST['quantia_aposta'];
+        $odd = $_POST['odd'];
+
+        $probabilidade = (1 / $odd) * 100;
+        
+
+        function gerarResultado($probabilidade){
+            return (mt_rand(1,100) <= $probabilidade) ? 1 : 0;
+        }
+
+        $resultado = gerarResultado($probabilidade);
+
+        if ($resultado == 1){
+            $mensagem = "Você ganhou";
+        } else{
+            $mensagem = "Você perdeu";
+        }
+
+        $saldo_atual = $quantia_aposta * $odd;
+        echo "ODD: $odd <br>";
+        echo "Probabilidade: " . number_format($probabilidade, 2) . "% <br>";
+        echo "Quantia apostada: R$ " . number_format($quantia_aposta, 2, ',', '.') . "<br>";
+        echo "Resultado: $mensagem <br>";
+        echo "Saldo: R$ " . number_format($saldo_atual, 2, ',', '.') ;
+    }
+
 ?>

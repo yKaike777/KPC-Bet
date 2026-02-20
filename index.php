@@ -90,21 +90,21 @@ $data = json_decode($response, true);
 
                                 // Casa
                                 if ($home) {
-                                    echo "<button class='btn btn-success btn-sm me-1' style='width: 160px;'>";
+                                    echo "<button class='btn btn-success btn-sm me-1 odd home'  style='width: 160px;' data-valor='" . htmlspecialchars($home['price']) . "'>";
                                     echo "x" . htmlspecialchars($home['price']);
                                     echo "</button>";
                                 }
 
                                 // Empate
                                 if ($draw) {
-                                    echo "<button class='btn btn-secondary btn-sm me-1' style='width: 160px;'>";
+                                    echo "<button class='btn btn-secondary btn-sm me-1 odd draw' style='width: 160px;' data-valor='" . htmlspecialchars($draw['price']) . "'>";
                                     echo "x" . htmlspecialchars($draw['price']);
                                     echo "</button>";
                                 }
 
                                 // Visitante
                                 if ($away) {
-                                    echo "<button class='btn btn-danger btn-sm me-1' style='width: 160px;'>";
+                                    echo "<button class='btn btn-danger btn-sm me-1 odd away' style='width: 160px;' data-valor='" . htmlspecialchars($away['price']) . "'>";
                                     echo "x" . htmlspecialchars($away['price']);
                                     echo "</button>";
                                 }
@@ -153,5 +153,37 @@ $data = json_decode($response, true);
         <iframe src="https://widget.api-futebol.com.br/render/widget_80ddc7ee9c3a80bf" title="API Futebol - Widget" style="border:1px solid #E5E7EB;border-radius:0.375rem;background:transparent;width:100%;height:520px;" loading="lazy" referrerpolicy="unsafe-url" sandbox="allow-scripts allow-forms allow-popups allow-top-navigation-by-user-activation allow-popups-to-escape-sandbox"></iframe>        </div>
     </div>
 </div>
+
+<div class="container position-fixed bottom-0 end-0 p-3 me-3 bg-info" style="width:25%;">
+            <div class="card">
+                <div class="card-header cabecalho"></div>
+            </div>
+</div>
+
+<script>
+const odds = document.querySelectorAll('.odd');
+const cabecalho = document.querySelector('.cabecalho');
+
+odds.forEach(odd => {
+    odd.addEventListener('click', () => {
+        const valor = odd.dataset.valor; 
+        const probabilidade = (1 / valor) * 100;
+        alert("Odd: " + valor + " Probabilidade: " + probabilidade.toFixed(2) + "%");
+
+        cabecalho.innerHTML = `
+            <strong>Odd:</strong> x${valor} <br>
+            <strong>Probabilidade:</strong> ${probabilidade.toFixed(2)}%
+            <form action='acoes.php' method='POST'>
+                <input type='hidden' name='odd' value='${valor}'>
+                <input type='number' class='form-control' name='quantia_aposta' placeholder='Digite o valor da aposta...'>
+                <button type='submit' name='apostar' class='btn btn-success float-end mt-3'>Apostar</button>
+            </form>
+
+        `;
+
+    })
+});
+
+</script>
 
 <?php include 'footer.php' ?>
