@@ -166,7 +166,6 @@
         $odd = $_POST['odd'];
 
         $probabilidade = (1 / $odd) * 100;
-        
 
         function gerarResultado($probabilidade){
             return (mt_rand(1,100) <= $probabilidade) ? 1 : 0;
@@ -175,31 +174,30 @@
         $resultado = gerarResultado($probabilidade);
 
         if ($resultado == 1){
-            $mensagem = "Você ganhou";
             $saldo_atual = ($quantia_aposta * $odd) - $quantia_aposta;
+            $_SESSION['resultado_mensagem'] = "Você Ganhou!";
         } else{
-            $mensagem = "Você perdeu";
             $saldo_atual = $quantia_aposta * -1;
+            $_SESSION['resultado_mensagem'] = "Você Perdeu :(";
         }
 
-        
-        echo "ODD: $odd <br>";
-        echo "Probabilidade: " . number_format($probabilidade, 2) . "% <br>";
-        echo "Quantia apostada: R$ " . number_format($quantia_aposta, 2, ',', '.') . "<br>";
-        echo "Resultado: $mensagem <br>";
-        if ($resultado == 1){
-            echo "Saldo: +R$ " . number_format($saldo_atual, 2, ',', '.') . "<br>" ;
-        } else{
-            echo "Saldo: -R$ " . number_format(abs($saldo_atual), 2, ',', '.') . "<br>" ;
-        }
-        
-        echo "<a href='index.php' class='btn btn-success'>Voltar</a>";
+        $_SESSION['saldo_atualizado'] = $saldo_atual;
 
+        // Atualiza saldo no banco
         $sql = "UPDATE usuarios SET saldo = saldo + :saldo WHERE id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->execute([
             ":saldo" => $saldo_atual,
-            ":id" => $usuario_id]);
-    }
+            ":id" => $usuario_id
+        ]);
 
+        // Busca saldo atualizado
+        $sql = "SELECT saldo FROM usuarios WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':id' => $usuario_id]);
+        $_SESSION['user_balance'] = $stmt->fetchColumn();
+
+        header("Location: resultado-mensagem.php");
+        exit;
+    }
 ?>

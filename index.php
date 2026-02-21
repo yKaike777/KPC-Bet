@@ -32,6 +32,14 @@ $data = json_decode($response, true);
 <?php include 'header.php' ?>
 <?php include 'navbar.php' ?>
 
+<style>
+.odd-active {
+    background-color: #f97316 !important;
+    border-color: #f97316 !important;
+    color: white !important;
+}
+</style>
+
 <div class="container mt-4">
     <h2>Futebol - Brasileirão Série A</h2>
 
@@ -169,8 +177,9 @@ $data = json_decode($response, true);
     </div>
 </div>
 
-<div class="container position-fixed bottom-0 end-0 p-3 me-3 d-none bet-container" style="width:25%; height:400px;">
-            <div class="card" style="height:100%;">
+<div class="container position-fixed bottom-0 end-0 p-3 me-3 d-none bet-container" style="width:25%; height:300px;">
+            <div class="card position-relative bg-dark text-light" style="height:100%;">
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2"></button>
                     <div class="card-title d-flex justify-content-center align-items-center titulo flex-column">
 
                     </div>
@@ -178,6 +187,7 @@ $data = json_decode($response, true);
 
                 </div>
                 <div class="card-body corpo d-flex flex-column" style="height:100%;"></div>
+                <input type="hidden" name="" id="valor_saldo" value="<?= $_SESSION['user_balance']?>">
             </div>
 </div>
 
@@ -187,10 +197,32 @@ const cabecalho = document.querySelector('.cabecalho');
 const titulo = document.querySelector('.titulo');
 const corpo = document.querySelector('.corpo');
 const betContainer = document.querySelector('.bet-container');
+const closeBtn = document.querySelector('.btn-close');
+const valorSaldo = document.getElementById('valor_saldo');
+
+function resetAposta(){
+    odds.forEach(o => o.classList.remove('odd-active'));
+    betContainer.classList.add('d-none');
+}
+
+closeBtn.addEventListener('click', () => {
+    resetAposta();
+});
 
 odds.forEach(odd => {
     odd.addEventListener('click', () => {
 
+        // 🔥 Se já está ativa → desativa e fecha
+        if (odd.classList.contains('odd-active')) {
+            resetAposta();
+            return;
+        }
+
+        // 🔥 Remove das outras
+        odds.forEach(o => o.classList.remove('odd-active'));
+
+        // 🔥 Ativa a clicada
+        odd.classList.add('odd-active');
         betContainer.classList.remove('d-none');
 
         const valor = odd.dataset.valor;
@@ -206,8 +238,23 @@ odds.forEach(odd => {
         `;
 
         cabecalho.innerHTML = `
-            <strong>Odd:</strong> x${valor} <br>
-            <strong>Probabilidade:</strong> ${probabilidade.toFixed(2)}%
+        <div class='d-flex flex-column gap-3'>
+            <div class='d-flex justify-content-between align-items-center'>
+                <strong>Odd</strong>
+                <div class='px-3 py-1 rounded text-white fw-bold'
+                    style='background-color:#f97316;'>
+                    x${valor}
+                </div>
+            </div>
+
+            <div class='d-flex justify-content-between align-items-center'>
+                <strong>Probabilidade</strong>
+                <div class='px-3 py-1 rounded text-white fw-bold'
+                    style='background-color:#f97316;'>
+                    ${probabilidade.toFixed(2)}%
+                </div>
+            </div>
+        </div>
         `;
 
         corpo.innerHTML = `
@@ -215,16 +262,15 @@ odds.forEach(odd => {
                 <input type='hidden' name='odd' value='${valor}'>
                 <input type='hidden' name='team' value='${team}'>
 
-                <div class="flex-grow-1 d-flex align-items-center">
+                <div class="flex-grow-1 d-flex align-items-end">
                     <input type='number' class='form-control' name='quantia_aposta' 
-                    placeholder='Digite o valor da aposta...' required>
+                    placeholder='Digite o valor da aposta...' min='10' step='.01' max="${valorSaldo.value}" required>
                 </div>
 
                 <button type='submit' name='apostar' 
                 class='btn btn-success w-100 mt-3'>Apostar</button>
             </form>
         `;
-
     });
 });
 </script>

@@ -31,7 +31,7 @@
             <hr>
             <form action="acoes.php" method="post">
                 <?php if($page === '1'){
-                    echo "<label for='quantia' class='text-dark mb-1'>Quantidade que deseja adicionar (Em Reais):</label>";
+                    echo "<label for='quantia' class='text-dark mb-1'>Quantidade que deseja depositar (Em Reais):</label>";
                     echo "
                     <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
@@ -43,7 +43,7 @@
                     </div>
                     </div>";
 
-                    echo "<button type='submit' class='btn btn-success float-end m-1' name='adicionar_saldo'>Adicionar</button>";
+                    echo "<button type='submit' class='btn btn-success float-end m-1' name='adicionar_saldo'>depositar</button>";
                 } else{
                     echo "<label for='quantia' class='text-dark mb-1'>Quantidade que deseja sacar (Em Reais):</label>";
                     echo "

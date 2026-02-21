@@ -62,7 +62,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="saldo">Saldo</label>
-                            <input type="number" class="form-control" name="saldo" value="<?=$usuario['saldo']?>" max="1000">
+                            <input type="number" class="form-control" name="saldo" value="<?=$usuario['saldo']?>" step='.01' max="100000">
                         </div>
                         <div class="mb-3">
                             <label for="password">Senha</label>
